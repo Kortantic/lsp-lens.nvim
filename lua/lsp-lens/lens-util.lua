@@ -83,7 +83,7 @@ end
 
 local function lsp_support_method(buf, method)
   for _, client in pairs(lsp_get_clients_method({ bufnr = buf })) do
-    if client.supports_method(method) then
+    if client:supports_method(method) then
       return true
     end
   end
@@ -132,12 +132,12 @@ end
 
 local function generate_function_id(function_info)
   return function_info.name
-    .. "uri="
-    .. function_info.query_params.textDocument.uri
-    .. "character="
-    .. function_info.selectionRangeStart.character
-    .. "line="
-    .. function_info.selectionRangeStart.line
+      .. "uri="
+      .. function_info.query_params.textDocument.uri
+      .. "character="
+      .. function_info.selectionRangeStart.character
+      .. "line="
+      .. function_info.selectionRangeStart.line
 end
 
 local function delete_existing_lines(bufnr, ns_id)
@@ -237,6 +237,7 @@ local function get_recent_editor(start_row, end_row, callback)
       end
     end
   end)
+  vim.loop.close(stdout)
 end
 
 local function do_request(symbols)
